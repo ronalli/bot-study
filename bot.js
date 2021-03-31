@@ -1,10 +1,18 @@
 require('dotenv').config();
 const api = require('covid19-api');
-const { Telegraf } = require('telegraf');
+const { Telegraf, Markup } = require('telegraf');
 const countries = require('./help');
 
 const bot = new Telegraf(process.env.API_TOKEN);
-bot.start((ctx) => ctx.reply(`Привет ${ctx.message.from.first_name} ${ctx.message.from.last_name}`));
+bot.start((ctx) =>
+	ctx.reply(`Привет ${ctx.message.from.first_name} ${ctx.message.from.last_name}`,
+		Markup.keyboard([
+			['Russia', 'Ukraine'],
+			['China', 'Iran'],
+		])
+			.resize()
+
+	));
 bot.help((ctx) => ctx.reply(countries));
 bot.on('text', async (ctx) => {
 	let data = {};
@@ -22,7 +30,7 @@ bot.on('text', async (ctx) => {
 		ctx.reply('Что-то некорректно введено! Возможно такой страны нет.')
 	}
 });
-bot.hears('hi', (ctx) => ctx.reply('Hey there'));
+
 bot.launch();
 
 console.log('бот запущен');

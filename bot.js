@@ -17,7 +17,7 @@ bot.on('text', async (ctx) => {
 Всего выздоровевших: ${data[0][0].recovered}
 			`);
 	} catch {
-		ctx.reply('Что-то некорректно введено!')
+		ctx.reply('Что-то некорректно введено! Возможно такой страны нет.')
 	}
 });
 bot.hears('hi', (ctx) => ctx.reply('Hey there'));
